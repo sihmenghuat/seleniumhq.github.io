@@ -1,8 +1,9 @@
 package dev.selenium.getting_started
 
-import io.github.bonigarcia.wdm.WebDriverManager
-import org.junit.jupiter.api.*
+import org.bouncycastle.asn1.x500.style.RFC4519Style.title
 import org.junit.jupiter.api.Assertions.assertEquals
+import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.TestInstance
 import org.openqa.selenium.By
 import org.openqa.selenium.WebDriver
 import org.openqa.selenium.chrome.ChromeDriver
