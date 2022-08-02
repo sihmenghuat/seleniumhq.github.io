@@ -2,9 +2,12 @@ package dev.selenium.getting_started;
 
 import io.github.bonigarcia.wdm.WebDriverManager;
 import org.junit.jupiter.api.AfterEach;
+import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.edge.EdgeDriver;
@@ -17,80 +20,100 @@ import org.openqa.selenium.safari.SafariDriver;
 import org.openqa.selenium.safari.SafariOptions;
 
 import java.nio.file.Path;
+import java.time.Duration;
 import java.util.Optional;
 
 public class OpenBrowserTest {
     public WebDriver driver;
 
     @Test
-    public void chromeSession() {
-        ChromeOptions options = new ChromeOptions();
-        driver = new ChromeDriver(options);
+    public void chromeSession_contactUs() throws InterruptedException {
+        driver = new ChromeDriver();
 
+        driver.get(" https://www.tech.gov.sg/");
+
+        String title = driver.getTitle();
+        Assertions.assertEquals("Government Technology Agency", title);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+        System.out.println("Chrome - Getting Contact Us Details");
+        WebElement searchButton = driver.findElement(By.cssSelector("#navbarExampleTransparentExample > div.navbar-start > li > a"));
+        searchButton.click();
+        Thread.sleep(5000);
+        String verifyUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("https://www.tech.gov.sg/contact-us/", verifyUrl);
         driver.quit();
     }
 
     @Test
-    public void edgeSession() {
+    public void chromeSession_searchEngine() throws InterruptedException {
+        driver = new ChromeDriver();
+
+        driver.get(" https://www.tech.gov.sg/");
+
+        String title = driver.getTitle();
+        Assertions.assertEquals("Government Technology Agency", title);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+        System.out.println("Chrome - Search Engineer Searching Salary");
+        WebElement searchButton = driver.findElement(By.id("search-activate"));
+        searchButton.click();
+        Thread.sleep(5000);
+        WebElement searchSalary = driver.findElement(By.cssSelector("#search-bar > div > div > form > div > div:nth-child(2) > button"));
+        WebElement searchBox = driver.findElement(By.id("search-box"));
+        searchBox.sendKeys("Salary");
+        Thread.sleep(5000);
+        searchSalary.click();
+
+        String verifyUrl1 = driver.getCurrentUrl();
+        Assertions.assertEquals("https://www.tech.gov.sg/search/?query=Salary", verifyUrl1);
+        Thread.sleep(8000);
+        driver.quit();
+    }
+
+
+    @Test
+    public void edgeSession_searchEngine() throws InterruptedException {
         EdgeOptions options = new EdgeOptions();
         driver = new EdgeDriver(options);
+        driver.get(" https://www.tech.gov.sg/");
 
+        String title = driver.getTitle();
+        Assertions.assertEquals("Government Technology Agency", title);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+        System.out.println("Edge - Search Engineer Searching Salary");
+        WebElement searchButton = driver.findElement(By.id("search-activate"));
+        searchButton.click();
+        Thread.sleep(5000);
+        WebElement searchSalary = driver.findElement(By.cssSelector("#search-bar > div > div > form > div > div:nth-child(2) > button"));
+        WebElement searchBox = driver.findElement(By.id("search-box"));
+        searchBox.sendKeys("Salary");
+        Thread.sleep(5000);
+        searchSalary.click();
+
+        String verifyUrl1 = driver.getCurrentUrl();
+        Assertions.assertEquals("https://www.tech.gov.sg/search/?query=Salary", verifyUrl1);
+        Thread.sleep(8000);
         driver.quit();
     }
 
     @Test
-    public void firefoxSession() {
-        FirefoxOptions options = new FirefoxOptions();
-        driver = new FirefoxDriver(options);
+    public void edgeSession_contactUs() throws InterruptedException {
+        EdgeOptions options = new EdgeOptions();
+        driver = new EdgeDriver(options);
+        driver.get(" https://www.tech.gov.sg/");
 
-        driver.quit();
-    }
-
-    @Disabled("Only runs on Windows")
-    @Test
-    public void internetExplorerSession() {
-        InternetExplorerOptions options = new InternetExplorerOptions();
-        driver = new InternetExplorerDriver(options);
-
-        driver.quit();
-    }
-
-    @Disabled("Only runs on Windows")
-    @Test
-    public void internetExplorerCompatibilitySession() {
-        InternetExplorerOptions options = new InternetExplorerOptions();
-        options.attachToEdgeChrome();
-        options.withEdgeExecutablePath("/path/to/edge/browser");
-
-        driver = new InternetExplorerDriver(options);
-
-        driver.quit();
-    }
-
-    @Disabled("Requires non-standard browser")
-    @Test
-    public void operaSession() {
-        //    Set webdriver.chrome.driver with Opera Driver
-        System.setProperty("webdriver.chrome.driver", "OPERA_DRIVER_PATH");
-        //    Create ChromeOptions Instance
-        chromeOptions = new ChromeOptions();
-        //    Set W3C Dialect
-        chromeOptions.setExperimentalOption("w3c", true);
-        //    Create ChromeDriver Instance
-        driver = new ChromeDriver(chromeOptions);
-        //    Open Target Website
-        driver.get("https://www.selenium.dev");
-        //    Quit
-        driver.quit();
-    }
-
-    @Disabled("Only runs on Mac")
-    @Test
-    public void safariSession() {
-        SafariOptions options = new SafariOptions();
-
-        driver = new SafariDriver(options);
-
+        String title = driver.getTitle();
+        Assertions.assertEquals("Government Technology Agency", title);
+        driver.manage().window().maximize();
+        driver.manage().timeouts().implicitlyWait(Duration.ofMillis(500));
+        System.out.println("Edge - Getting Contact Us Details");
+        WebElement searchButton = driver.findElement(By.cssSelector("#navbarExampleTransparentExample > div.navbar-start > li > a"));
+        searchButton.click();
+        Thread.sleep(5000);
+        String verifyUrl = driver.getCurrentUrl();
+        Assertions.assertEquals("https://www.tech.gov.sg/contact-us/", verifyUrl);
         driver.quit();
     }
 }
